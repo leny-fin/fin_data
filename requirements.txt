@@ -1,7 +1,6 @@
-openpyxl
-numpy
-datetime
-requests
+streamlit
 pandas
+requests
+openpyxl
 OpenDartReader
 FinanceDataReader
