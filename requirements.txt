@@ -1,2 +1,7 @@
+openpyxl
+numpy
+datetime
+requests
+pandas
 OpenDartReader
 FinanceDataReader
