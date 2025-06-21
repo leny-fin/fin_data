@@ -58,7 +58,7 @@ def check_api_key_validity(api_key: str) -> bool:
         print("API 요청 실패:", e)
         return False
 
-if st.button("✅ API 키 확인"):
+if st.button("✅ 김경태 API 키 확인"):
     if check_api_key_validity(api_key):
         st.session_state.api_verified = True
         st.session_state.my_api = api_key
