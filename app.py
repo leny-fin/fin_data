@@ -136,8 +136,10 @@ if st.session_state.get("s_code_verified", False):
             st.success("✅ 데이터 수집 완료!")
 
 
-# 4️⃣ 데이터 미리보기
+# 4️⃣ 원하는 자료 확인
 if "report_data" in st.session_state:
+
+    st.header("원하는 자료 확인", divider=True)
 
     # report_data 가져오기
     report_data = st.session_state["report_data"]
@@ -169,7 +171,7 @@ if "report_data" in st.session_state:
 
     if st.button("연간 손익계산서 가져오기"):
 
-        i_s, add_list = parse_annual_income_statements(fs_list, industry=None)
+        i_s, add_list = parse_annual_income_statements(fs_list)
         st.write("연간 손익계산서 :")
         st.dataframe(i_s)
 
@@ -177,3 +179,74 @@ if "report_data" in st.session_state:
             st.write("주의할 값 :")
             for df in add_list :
                 st.dateframe(df)
+
+    if st.button("분기 손익계산서 가져오기"):
+
+        q_s, add_list = parse_quarterly_income_statements(qfs_list)
+
+        st.write("분기 손익계산서 :")
+        st.dataframe(q_s)
+
+        if add_list :
+            st.write("주의할 값 :")
+            for df in add_list :
+                st.dateframe(df)
+
+    if st.button("연간 재무상태표 가져오기"):
+
+        b_s, add_list = parse_annual_balance_sheets(fs_list)
+
+        st.write("연간 재무상태표 :")
+        st.dataframe(b_s)
+
+        if add_list :
+            st.write("주의할 값 :")
+            for df in add_list :
+                st.dateframe(df)
+
+    if st.button("연간 현금흐름표 가져오기"):
+
+        c_f, add_list = parse_annual_cash_flow(fs_list)
+
+        st.write("연간 현금흐름표 :")
+        st.dataframe(c_f)
+
+        if add_list :
+            st.write("주의할 값 :")
+            for df in add_list :
+                st.dateframe(df)       
+
+    if st.button("배당 정보 가져오기"):
+
+        d_s, add_list = parse_dividend(d_list)
+
+        st.write("배당 정보 :")
+        st.dataframe(d_s)
+
+    if st.button("주식 수 가져오기"):
+
+        stocks, t_stocks, add_list = parse_stocks(s_list, s_name)
+
+        st.write("발행한 주식 총 수 :")
+        st.dataframe(stocks)
+        st.write("자기주식 수 :")
+        st.dataframe(t_stocks)
+
+    if st.button("직원수 및 임금 가져오기"):
+
+        lbr_sly = parse_labor_salary(e_list)
+
+        st.write("직원수 및 임금 :")
+        st.dataframe(lbr_sly)
+
+    if st.button("연도별 사업보고서 URL 가져오기"):
+
+        report_url_df = parse_report_urls(u_df)
+
+        st.write("연도별 사업보고서 URL :")
+        st.dataframe(u_df)
+
+    if st.button("연도별 주가 정보 가져오기"):
+
+        st.write("연도별 주가 :")
+        st.dataframe(p_df)
