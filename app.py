@@ -109,14 +109,21 @@ if st.session_state.get("s_code_success_message"):
 if st.session_state.get("s_code_verified", False):
     if st.button(f"🚀 {st.session_state.s_name} 데이터 수집 실행"):
         with st.spinner("📂 데이터를 수집 중입니다... 처음 실행시 1분 가량 소요"):
+            status_placeholder = st.empty()
+
+            def log(msg):
+                status_placeholder.info(msg)
+
             dart = create_dart(st.session_state.my_api)
             report_data = {}
 
+            log("① 기업 정보 수집 중...")
             dic = get_company_info(dart, st.session_state.s_code)
             s_name = dic['corp_name']
             report_data["s_name"] = s_name
             report_data["company_dict"] = dic
 
+            log("② 기업 개요 및 주요주주 정보 수집 중...")
             status_df, m_holder_df = fetch_company_status(st.session_state.s_code)
             report_data["status_df"] = status_df
             report_data["m_holder_df"] = m_holder_df
@@ -124,14 +131,29 @@ if st.session_state.get("s_code_verified", False):
             year_range = range(st.session_state.s_year, st.session_state.e_year + 1)
             n_year_range = range(2018, st.session_state.e_year + 1)
 
+            log("③ 연간 재무제표 수집 중...")
             report_data["fs_list"] = get_financial_statements(dart, st.session_state.s_code, year_range)
+
+            log("④ 분기 재무제표 수집 중...")
             report_data["qfs_list"] = get_quarterly_financial_statements(dart, st.session_state.s_code, n_year_range, st.session_state.quarter_code)
+
+            log("⑤ 직원/임금 정보 수집 중...")
             report_data["e_list"] = collect_employee_data(dart, st.session_state.s_code, year_range)
+
+            log("⑥ 배당 정보 수집 중...")
             report_data["d_list"] = collect_dividend_data(dart, st.session_state.s_code, year_range)
+
+            log("⑦ 공시 리포트 수집 중...")
             report_data["u_df"] = get_reports(dart, st.session_state.s_code, st.session_state.s_date)
+
+            log("⑧ 주가 정보 수집 중...")
             report_data["p_df"] = collect_price_data(st.session_state.s_code, st.session_state.s_year, st.session_state.e_year)
+
+            log("⑨ 주식 발행 정보 수집 중...")
             report_data["s_list"] = collect_stock_data(dart, st.session_state.s_code, year_range)
 
+
+            status_placeholder.empty()
             st.session_state["report_data"] = report_data
             st.success("✅ 데이터 수집 완료!")
 
