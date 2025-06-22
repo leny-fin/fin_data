@@ -263,7 +263,7 @@ FALLBACK_ACCOUNTS_IS = {
 }
 
 # 연간 손익계산서 parse
-def parse_annual_income_statements(fs_list, industry):
+def parse_annual_income_statements(fs_list, industry=None):
 
     # 연간 손익계산서
     i_s = pd.DataFrame()
@@ -436,7 +436,7 @@ def parse_annual_income_statements(fs_list, industry):
     return i_s, log_list
 
 # 분기 손익계산서 parse
-def parse_quarterly_income_statements(qfs_list, industry):
+def parse_quarterly_income_statements(qfs_list, industry=None):
 
     # 분기 손익계산서
     q_s = pd.DataFrame()
@@ -685,7 +685,7 @@ FALLBACK_ACCOUNTS_BS = {
 }
 
 # 연간 재무상태표 parse
-def parse_annual_balance_sheets(fs_list, industry):
+def parse_annual_balance_sheets(fs_list, industry=None):
 
     # 연간 재무상태표
     b_s = pd.DataFrame()
