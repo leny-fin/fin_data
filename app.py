@@ -108,7 +108,7 @@ if st.session_state.get("s_code_success_message"):
 # 3️⃣ 실행 버튼
 if st.session_state.get("s_code_verified", False):
     if st.button(f"🚀 {st.session_state.s_name} 데이터 수집 실행"):
-        with st.spinner("📂 데이터를 수집 중입니다... 15초 가량 소요"):
+        with st.spinner("📂 데이터를 수집 중입니다... 처음 실행시 1분 가량 소요"):
             dart = create_dart(st.session_state.my_api)
             report_data = {}
 
